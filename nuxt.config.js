@@ -38,6 +38,8 @@ export default {
   plugins: [
     "@/plugins/repositories.js", // siempre primero
 
+    "@/plugins/i18n.js",
+
     "@/plugins/vuelidate.js",
 
     "@/plugins/axios.js" // siempre ultimo

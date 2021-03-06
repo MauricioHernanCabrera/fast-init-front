@@ -5,7 +5,11 @@ const cookieparser = process.server ? require("cookieparser") : undefined;
 export const state = () => ({
   user: null,
 
-  dashboardDrawerOpen: null
+  dashboardDrawerOpen: null,
+
+  locales: ["en", "es"],
+
+  locale: "es"
 });
 
 export const getters = {

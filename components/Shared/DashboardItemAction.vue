@@ -8,6 +8,7 @@
         small
         color="primary"
         @click="$emit('click')"
+        :loading="isLoading"
       >
         <v-icon small> mdi-{{ icon }} </v-icon>
       </v-btn>
@@ -27,6 +28,11 @@ export default {
     tip: {
       type: String,
       required: true,
+    },
+
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
   },
 };

@@ -1,0 +1,10 @@
+{
+  "validations": {
+    "name": {
+      "required": "¡El nombre es requerido!"
+    },
+    "url": {
+      "required": "¡La url es requerida!"
+    }
+  }
+}
