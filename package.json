@@ -14,7 +14,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "cookieparser": "^0.1.0",
     "core-js": "^3.8.3",
-    "crud-repository": "^1.0.0",
+    "crud-repository": "^1.0.2",
     "crumb-scss": "^1.4.0",
     "dotenv": "^8.2.0",
     "jwt-decode": "^3.1.2",

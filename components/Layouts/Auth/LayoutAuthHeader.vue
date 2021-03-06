@@ -2,7 +2,7 @@
   <v-app-bar app flat color="transparent">
     <nuxt-link to="/">
       <v-img
-        src="/images/placeholder-dark.png"
+        src="/images/placeholder-gray.png"
         height="36px"
         max-height="36px"
         width="104px"

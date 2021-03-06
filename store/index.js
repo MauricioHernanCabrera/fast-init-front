@@ -3,7 +3,9 @@ import { get } from "lodash";
 const cookieparser = process.server ? require("cookieparser") : undefined;
 
 export const state = () => ({
-  user: null
+  user: null,
+
+  dashboardDrawerOpen: null
 });
 
 export const getters = {
@@ -19,6 +21,10 @@ export const mutations = {
 
   UPDATE_USER: (state, payload) => {
     state.user = { ...state.user, ...payload };
+  },
+
+  SET_DASHBOARD_DRAWER_OPEN: (state, payload) => {
+    state.dashboardDrawerOpen = payload;
   }
 };
 
@@ -29,6 +35,10 @@ export const actions = {
 
   updateUser({ commit }, payload) {
     commit("UPDATE_USER", payload);
+  },
+
+  setDashboardDrawerOpen({ commit }, payload) {
+    commit("SET_DASHBOARD_DRAWER_OPEN", payload);
   },
 
   async setToken({}, token) {
@@ -88,8 +98,6 @@ export const actions = {
   async nuxtServerInit({ dispatch }, { req }) {
     try {
       const { token } = cookieparser.parse(req.headers.cookie);
-
-      console.log({ token });
 
       if (!token) {
         return;
