@@ -4,7 +4,7 @@
     @submit="submitForm"
     :isLoading="isLoading"
     :isDisabled="$v.$invalid"
-    title="Actualizar programa"
+    title="Actualizar proyecto"
   >
     <v-text-field
       label="Nombre (*)"
@@ -14,15 +14,6 @@
       @input="$v.form.name.$touch()"
       @blur="$v.form.name.$touch()"
       autofocus
-    ></v-text-field>
-
-    <v-text-field
-      label="Url (*)"
-      required
-      v-model="form.url"
-      :error-messages="urlErrors"
-      @input="$v.form.url.$touch()"
-      @blur="$v.form.url.$touch()"
     ></v-text-field>
   </ModalForm>
 </template>
@@ -37,23 +28,18 @@ export default {
   validations: {
     form: {
       name: { required },
-      url: { required },
     },
   },
 
   data() {
     return {
-      fieldsPick: ["name", "url", "_id"],
+      fieldsPick: ["name", "_id"],
     };
   },
 
   computed: {
     nameErrors() {
       return this.vuelidateErrors(this.$v.form.name, "name");
-    },
-
-    urlErrors() {
-      return this.vuelidateErrors(this.$v.form.url, "url");
     },
   },
 };

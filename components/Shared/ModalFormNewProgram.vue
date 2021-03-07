@@ -13,6 +13,7 @@
       :error-messages="nameErrors"
       @input="$v.form.name.$touch()"
       @blur="$v.form.name.$touch()"
+      autofocus
     ></v-text-field>
 
     <v-text-field

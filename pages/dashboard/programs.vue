@@ -4,9 +4,7 @@
       <DashboardPageHeader
         title="Programas"
         btnAddText="Crear un programa"
-        @click="
-          setModal({ active: 'program_new', data: { name: '', url: '' } })
-        "
+        @click="setModal({ active: 'program_new', data: { name: '' } })"
       >
       </DashboardPageHeader>
 
@@ -15,7 +13,7 @@
           <DashboardItem
             v-for="(programItem, programItemIndex) in programs"
             :key="programItem._id"
-            :isOdd="programItemIndex % 2 === 1"
+            :isVariant="programItemIndex % 2 === 0"
             :title="programItem.name"
             :description="programItem.url"
           >
@@ -65,8 +63,6 @@ import ModalFormNewProgram from "@/components/Shared/ModalFormNewProgram";
 import ModalFormUpdateProgram from "@/components/Shared/ModalFormUpdateProgram";
 
 import modalFormMixin from "@/mixins/modal-form";
-
-import { findIndex } from "lodash";
 
 export default {
   middleware: ["has-not-auth"],
@@ -150,10 +146,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../../assets/scss/utils.scss";
-
-.dashboard_list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 </style>

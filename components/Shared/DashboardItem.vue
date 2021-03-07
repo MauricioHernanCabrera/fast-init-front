@@ -1,5 +1,12 @@
 <template>
-  <li class="dashboard_item" :class="{ 'dashboard_item--odd': isOdd }">
+  <li :class="{ 'dashboard_item--variant': isVariant }" class="dashboard_item">
+    <v-card
+      flat
+      color="transparent"
+      v-bind="$attrs"
+      class="dashboard_item__link"
+    ></v-card>
+
     <div class="dashboard_item__pre">
       <span class="dashboard_item__title">{{ title }}</span>
       <span class="dashboard_item__description">
@@ -20,8 +27,10 @@
 
 <script>
 export default {
+  inheritAttrs: false,
+
   props: {
-    isOdd: {
+    isVariant: {
       type: Boolean,
       required: true,
     },
@@ -46,13 +55,16 @@ export default {
   display: flex;
   padding: 14px 16px;
   justify-content: space-between;
+  position: relative;
 }
 
-.dashboard_item--odd {
+.dashboard_item--variant {
   background-color: $dashboard_item_pair_color;
 }
 
 .dashboard_item__pre {
+  position: relative;
+  z-index: 2;
 }
 
 .dashboard_item__title {
@@ -73,5 +85,16 @@ export default {
 }
 
 .dashboard_item__append {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard_item__link {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
