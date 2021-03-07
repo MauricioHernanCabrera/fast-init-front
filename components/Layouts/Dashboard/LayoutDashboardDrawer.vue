@@ -8,15 +8,7 @@
     class="v-navigation-drawer--layout_dashboard_drawer"
     :mobile-breakpoint="992"
   >
-    <nuxt-link to="/" class="drawer__logo">
-      <v-img
-        src="/images/placeholder-gray.png"
-        height="36px"
-        max-height="36px"
-        width="104px"
-        max-width="104px"
-      ></v-img>
-    </nuxt-link>
+    <Logo class="mb_6" />
 
     <v-list dense>
       <v-list-item
@@ -72,14 +64,19 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Logo from "@/components/Shared/Logo";
 
 export default {
+  components: {
+    Logo,
+  },
+
   data() {
     return {
       menuOpen: false,
       items: [
-        { title: "Dashboard", icon: "view-dashboard", to: "/dashboard" },
-        { title: "Proyectos", icon: "clipboard", to: "/dashboard/projects" },
+        // { title: "Dashboard", icon: "view-dashboard", to: "/dashboard" },
+        { title: "Proyectos", icon: "clipboard", to: "/dashboard/" },
         // { title: "Comandos", icon: "code-json", to: "/dashboard/commands" },
         {
           title: "Programas",

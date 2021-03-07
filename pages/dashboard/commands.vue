@@ -89,6 +89,10 @@ export default {
 
   layout: "dashboard",
 
+  head: {
+    title: "Fast Init - Comandos",
+  },
+
   async asyncData({ $repositories, query: { projectId = null }, redirect }) {
     try {
       const [resProject, resCommands] = await Promise.all([
@@ -106,7 +110,7 @@ export default {
     } catch (error) {
       console.log(error);
 
-      return redirect("/dashboard/projects");
+      return redirect("/dashboard/");
     }
   },
 

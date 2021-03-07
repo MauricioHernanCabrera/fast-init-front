@@ -71,6 +71,10 @@ export default {
 
   layout: "dashboard",
 
+  head: {
+    title: "Fast Init - Programas",
+  },
+
   async asyncData({ $repositories }) {
     let programs = [];
 

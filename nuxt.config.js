@@ -1,5 +1,16 @@
-import colors from "vuetify/es5/util/colors";
 import config from "./config";
+
+const page = {
+  title: "Fast Init",
+  short_name: "Fast Init",
+  description: "Inicia todos los programas que necesitas con un simple click",
+  safeImg: {
+    url: `${config.frontUrl}/images/safe_image.jpg`,
+    alt: "Image of Fast Init"
+  },
+  favicon: `${config.frontUrl}/images/logo.ico`,
+  author: `Mauricio Hernan Cabrera`
+};
 
 export default {
   env: config,
@@ -10,15 +21,53 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - fast-init-rework",
-    title: "fast-init-rework",
+    title: page.title,
     meta: [
       { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, user-scalable=no"
+      },
+      { hid: "author", name: "author", content: `${page.author}` },
+      {
+        hid: "description",
+        name: "description",
+        content: `${page.description}`
+      },
+      { hid: "twitter-card", name: "twitter:card", content: "summary" },
+      { hid: "twitter-title", name: "twitter:title", content: `${page.title}` },
+      {
+        hid: "twitter-description",
+        name: "twitter:description",
+        content: `${page.description}`
+      },
+
+      {
+        hid: "twitter-image",
+        name: "twitter:image",
+        content: `${page.safeImg.url}`
+      },
+      {
+        hid: "twitter-image-alt",
+        name: "twitter:image:alt",
+        content: `${page.safeImg.alt}`
+      },
+      { hid: "og-type", property: "og:type", content: "website" },
+      { hid: "og-title", property: "og:title", content: `${page.title}` },
+      { hid: "og-image", property: "og:image", content: `${page.safeImg.url}` },
+      {
+        hid: "og-site_name",
+        property: "og:site_name",
+        content: `${page.title}`
+      },
+      {
+        hid: "og-description",
+        property: "og:description",
+        content: `${page.description}`
+      }
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/x-icon", href: page.favicon },
       {
         rel: "preconnect",
         href: "https://fonts.gstatic.com"

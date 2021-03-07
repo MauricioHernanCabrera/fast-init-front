@@ -1,14 +1,6 @@
 <template>
   <v-app-bar app flat class="v-app-bar--layout_dashboard_header">
-    <nuxt-link to="/">
-      <v-img
-        src="/images/placeholder-gray.png"
-        height="36px"
-        max-height="36px"
-        width="104px"
-        max-width="104px"
-      ></v-img>
-    </nuxt-link>
+    <Logo />
 
     <v-spacer></v-spacer>
 
@@ -20,8 +12,13 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Logo from "@/components/Shared/Logo";
 
 export default {
+  components: {
+    Logo,
+  },
+
   computed: {
     ...mapState(["dashboardDrawerOpen"]),
   },

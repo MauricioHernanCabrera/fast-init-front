@@ -88,9 +88,8 @@ export const actions = {
       dispatch("removeRefreshToken")
     ]);
 
-    this.$router.push("/", () => {
-      dispatch("setUser", null);
-    });
+    dispatch("setUser", null);
+    this.$router.push("/login");
   },
 
   async loadUserData({ dispatch }) {
