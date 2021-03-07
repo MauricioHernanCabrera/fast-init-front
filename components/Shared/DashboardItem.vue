@@ -63,8 +63,6 @@ export default {
 }
 
 .dashboard_item__pre {
-  position: relative;
-  z-index: 2;
 }
 
 .dashboard_item__title {
@@ -87,6 +85,7 @@ export default {
 .dashboard_item__append {
   position: relative;
   z-index: 2;
+  display: flex;
 }
 
 .dashboard_item__link {

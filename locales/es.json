@@ -5,6 +5,12 @@
     },
     "url": {
       "required": "¡La url es requerida!"
+    },
+    "project": {
+      "required": "¡El proyecto es requerido!"
+    },
+    "program": {
+      "required": "¡El programa es requerido!"
     }
   }
 }

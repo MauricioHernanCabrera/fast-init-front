@@ -13,30 +13,32 @@
       <DashboardCard title="Proyectos">
         <DashboardList noItems="No hay proyectos cargados">
           <DashboardItem
-            v-for="(programItem, programItemIndex) in projects"
-            :key="programItem._id"
-            :isVariant="programItemIndex % 2 === 0"
-            :title="programItem.name"
-            :description="programItem.commands.join(',')"
-            :to="`/dashboard/commands?projectId=${programItem._id}`"
+            v-for="(projectItem, projectItemIndex) in projects"
+            :key="projectItem._id"
+            :isVariant="projectItemIndex % 2 === 0"
+            :title="projectItem.name"
+            :description="
+              projectItem.commands
+                .map(({ program }) => program.name)
+                .join(' | ')
+            "
+            :to="`/dashboard/commands?projectId=${projectItem._id}`"
           >
-            <DashboardItemAction
-              icon="clipboard-outline"
-              tip="Copiar comandos"
-              @click="copyClipboard(programItem.commands)"
+            <DashboardItemActionCopyClipboard
+              :data="getDataToCopyClipboard(projectItem.commands)"
             />
 
             <DashboardItemAction
               icon="pencil-outline"
-              tip="Editar programa"
-              @click="setModal({ active: 'project_update', data: programItem })"
+              tip="Editar proyecto"
+              @click="setModal({ active: 'project_update', data: projectItem })"
             />
 
             <DashboardItemAction
               icon="delete-outline"
-              tip="Eliminar programa"
-              @click="submitDeleteProgram(programItem)"
-              :isLoading="programItem.isLoading"
+              tip="Eliminar proyecto"
+              @click="submitDeleteProject(projectItem)"
+              :isLoading="projectItem.isLoading"
             />
           </DashboardItem>
         </DashboardList>
@@ -48,7 +50,7 @@
       :data="modal.data"
       :isLoading="modal.isLoading"
       @close="closeModal"
-      @submit="submitNewProgram"
+      @submit="submitNewProject"
     ></ModalFormNewProject>
 
     <ModalFormUpdateProject
@@ -56,16 +58,8 @@
       :data="modal.data"
       :isLoading="modal.isLoading"
       @close="closeModal"
-      @submit="submitUpdateProgram"
+      @submit="submitUpdateProject"
     ></ModalFormUpdateProject>
-
-    <textarea
-      style="z-index: -1; position: absolute; top: -1000%"
-      v-model="clipboard"
-      ref="customNotesClipboard"
-      cols="30"
-      rows="10"
-    ></textarea>
   </div>
 </template>
 
@@ -75,6 +69,7 @@ import DashboardPageHeader from "@/components/Shared/DashboardPageHeader";
 import DashboardList from "@/components/Shared/DashboardList";
 import DashboardItem from "@/components/Shared/DashboardItem";
 import DashboardItemAction from "@/components/Shared/DashboardItemAction";
+import DashboardItemActionCopyClipboard from "@/components/Shared/DashboardItemActionCopyClipboard";
 
 import ModalFormNewProject from "@/components/Shared/ModalFormNewProject";
 import ModalFormUpdateProject from "@/components/Shared/ModalFormUpdateProject";
@@ -112,19 +107,14 @@ export default {
     DashboardList,
     DashboardItem,
     DashboardItemAction,
+    DashboardItemActionCopyClipboard,
 
     ModalFormNewProject,
     ModalFormUpdateProject,
   },
 
-  data() {
-    return {
-      clipboard: "asdsa",
-    };
-  },
-
   methods: {
-    async submitNewProgram(data) {
+    async submitNewProject(data) {
       try {
         this.loadingModal();
 
@@ -138,7 +128,7 @@ export default {
       }
     },
 
-    async submitUpdateProgram({ _id, ...data }) {
+    async submitUpdateProject({ _id, ...data }) {
       try {
         this.loadingModal();
 
@@ -152,7 +142,7 @@ export default {
       }
     },
 
-    async submitDeleteProgram(data) {
+    async submitDeleteProject(data) {
       this.updateItemIsLoadingProp(this.projects, data._id, true);
 
       try {
@@ -164,26 +154,20 @@ export default {
       }
     },
 
-    copyClipboard(commands) {
+    getDataToCopyClipboard(commands) {
       const commandsFiltered = commands.filter(
         (command) => command.program && command.program._id
       );
 
       const str = commandsFiltered
         .reduce(
-          (acum, { program, param = "" }) =>
-            `${acum} "${program.url}" ${param} &&`,
+          (acum, { program, params = "" }) =>
+            `${acum} "${program.url}" ${params} &&`,
           ""
         )
         .slice(1, -3);
 
-      const json = str;
-      this.clipboard = json;
-
-      this.$nextTick(() => {
-        this.$refs.customNotesClipboard.select();
-        document.execCommand("copy");
-      });
+      return str;
     },
   },
 };

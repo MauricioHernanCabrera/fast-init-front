@@ -1,7 +1,9 @@
-<template>
-  <div>HOLAMUNDOI</div>
-</template>
+<template></template>
 
 <script>
-export default {};
+export default {
+  middleware({ redirect }) {
+    redirect("/login");
+  },
+};
 </script>

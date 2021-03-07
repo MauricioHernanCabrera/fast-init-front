@@ -80,7 +80,7 @@ export default {
       items: [
         { title: "Dashboard", icon: "view-dashboard", to: "/dashboard" },
         { title: "Proyectos", icon: "clipboard", to: "/dashboard/projects" },
-        { title: "Comandos", icon: "code-json", to: "/dashboard/commands" },
+        // { title: "Comandos", icon: "code-json", to: "/dashboard/commands" },
         {
           title: "Programas",
           icon: "format-list-bulleted-type",
