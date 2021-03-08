@@ -37,7 +37,6 @@ export default {
         return this.active;
       },
       set: function(newValue) {
-        console.log("this.active", { newValue });
         this.$emit("close", newValue);
       }
     }
