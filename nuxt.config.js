@@ -91,6 +91,8 @@ export default {
 
     "@/plugins/vuelidate.js",
 
+    { src: "@/plugins/ga.js", mode: "client" },
+
     "@/plugins/axios.js" // siempre ultimo
   ],
 
@@ -118,10 +120,15 @@ export default {
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    manifest: {
-      lang: "en"
-    }
+  manifest: {
+    name: page.title,
+    short_name: page.short_name,
+    lang: "es-AR",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    background_color: "#1976D2",
+    theme_color: "#115293"
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
