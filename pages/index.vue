@@ -3,7 +3,7 @@
 <script>
 export default {
   middleware({ redirect }) {
-    redirect("/login");
+    redirect("/dashboard");
   },
 };
 </script>

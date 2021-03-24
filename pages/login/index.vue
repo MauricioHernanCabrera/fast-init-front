@@ -5,8 +5,6 @@
 <script>
 import Login from "@/components/Login/Login";
 export default {
-  middleware: ["has-auth"],
-
   layout: "auth",
 
   head: {
