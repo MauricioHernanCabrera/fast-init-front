@@ -10,39 +10,66 @@
       >
       </DashboardPageHeader>
 
-      <DashboardCard title="Proyectos">
-        <DashboardList noItems="No hay proyectos cargados">
-          <DashboardItem
-            v-for="(projectItem, projectItemIndex) in projects"
-            :key="projectItem._id"
-            :isVariant="projectItemIndex % 2 === 0"
-            :title="projectItem.name"
-            :description="
-              projectItem.commands
-                .map(({ program }) => program.name)
-                .join(' | ')
-            "
-            :to="`/dashboard/commands?projectId=${projectItem._id}`"
-          >
-            <DashboardItemActionCopyClipboard
-              :data="getDataToCopyClipboard(projectItem.commands)"
-            />
+      <v-data-table
+        :headers="headers"
+        :items="projects"
+        hide-default-footer
+        mobile-breakpoint="0"
+        class="v-data-table--custom"
+        loading-text="Cargando proyecto"
+        no-data-text="No hay proyecto cargados"
+        :loading="isFirstLoading"
+        @click:row="handleClick"
+      >
+        <template v-slot:item.commands="{ item }">
+          {{
+            item.commands.length > 0
+              ? item.commands.map(({ program }) => program.name).join(" | ")
+              : "-"
+          }}
+        </template>
 
-            <DashboardItemAction
-              icon="pencil-outline"
-              tip="Editar proyecto"
-              @click="setModal({ active: 'project_update', data: projectItem })"
-            />
+        <template v-slot:item.actions="{ item }">
+          <v-menu bottom left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
 
-            <DashboardItemAction
-              icon="delete-outline"
-              tip="Eliminar proyecto"
-              @click="submitDeleteProject(projectItem)"
-              :isLoading="projectItem.isLoading"
-            />
-          </DashboardItem>
-        </DashboardList>
-      </DashboardCard>
+            <v-list>
+              <v-list-item :to="`/dashboard/commands?projectId=${item._id}`">
+                <v-list-item-content>
+                  <v-list-item-title>Ver comandos</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-list-item @click="copy(getDataToCopyClipboard(item.commands))">
+                <v-list-item-content>
+                  <v-list-item-title>Copiar comandos</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-list-item
+                @click="setModal({ active: 'project_update', data: item })"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Editar proyecto</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-list-item
+                @click="submitDeleteProject(item)"
+                :disabled="item.isLoading"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Eliminar proyecto</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
+      </v-data-table>
     </div>
 
     <ModalFormNewProject
@@ -76,6 +103,8 @@ import ModalFormUpdateProject from "@/components/Shared/ModalFormUpdateProject";
 
 import modalFormMixin from "@/mixins/modal-form";
 
+import copy from "copy-to-clipboard";
+
 export default {
   middleware: ["has-not-auth"],
 
@@ -85,24 +114,6 @@ export default {
 
   head: {
     title: "Fast Init - Proyectos",
-  },
-
-  async asyncData({ $repositories }) {
-    let projects = [];
-
-    try {
-      const { body } = await $repositories.project.getAll({
-        "paginator.limit": 100000,
-      });
-
-      projects = body.docs;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      return {
-        projects,
-      };
-    }
   },
 
   components: {
@@ -117,7 +128,50 @@ export default {
     ModalFormUpdateProject,
   },
 
+  data() {
+    return {
+      isFirstLoading: true,
+      projects: [],
+      headers: [
+        {
+          text: "Nombre",
+          value: "name",
+        },
+        {
+          text: "Comandos",
+          value: "commands",
+          sortable: false,
+        },
+        {
+          text: "Acciones",
+          value: "actions",
+          sortable: false,
+        },
+      ],
+    };
+  },
+
+  async mounted() {
+    try {
+      const { body } = await this.$repositories.project.getAll({
+        "paginator.limit": 100000,
+      });
+
+      this.projects = body.docs;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.isFirstLoading = false;
+    }
+  },
+
   methods: {
+    copy,
+
+    handleClick(item) {
+      this.$router.push(`/dashboard/commands?projectId=${item._id}`);
+    },
+
     async submitNewProject(data) {
       try {
         this.loadingModal();

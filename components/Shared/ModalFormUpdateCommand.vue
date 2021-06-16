@@ -55,7 +55,7 @@ export default {
 
   data() {
     return {
-      fieldsPick: ["name", "program", "_id"],
+      fieldsPick: ["params", "program", "_id"],
       programs: [],
     };
   },

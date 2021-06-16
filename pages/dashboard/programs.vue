@@ -8,8 +8,47 @@
       >
       </DashboardPageHeader>
 
-      <DashboardCard title="Programas">
-        <DashboardList noItems="No hay programas cargados">
+      <v-data-table
+        :headers="headers"
+        :items="programs"
+        hide-default-footer
+        mobile-breakpoint="0"
+        class="v-data-table--custom"
+        loading-text="Cargando programas"
+        no-data-text="No hay programas cargados"
+        :loading="isFirstLoading"
+      >
+        <template v-slot:item.actions="{ item }">
+          <v-menu bottom left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                @click="setModal({ active: 'program_update', data: item })"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Editar programa</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-list-item
+                @click="submitDeleteProgram(item)"
+                :disabled="item.isLoading"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>Eliminar programa</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
+      </v-data-table>
+
+      <!-- <DashboardList noItems="No hay programas cargados">
           <DashboardItem
             v-for="(programItem, programItemIndex) in programs"
             :key="programItem._id"
@@ -30,8 +69,7 @@
               :isLoading="programItem.isLoading"
             />
           </DashboardItem>
-        </DashboardList>
-      </DashboardCard>
+        </DashboardList> -->
     </div>
 
     <ModalFormNewProgram
@@ -75,24 +113,6 @@ export default {
     title: "Fast Init - Programas",
   },
 
-  async asyncData({ $repositories }) {
-    let programs = [];
-
-    try {
-      const { body } = await $repositories.program.getAll({
-        "paginator.limit": 100000,
-      });
-
-      programs = body.docs;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      return {
-        programs,
-      };
-    }
-  },
-
   components: {
     DashboardPageHeader,
     DashboardCard,
@@ -102,6 +122,42 @@ export default {
 
     ModalFormNewProgram,
     ModalFormUpdateProgram,
+  },
+
+  data() {
+    return {
+      isFirstLoading: true,
+      programs: [],
+      headers: [
+        {
+          text: "Nombre",
+          value: "name",
+        },
+        {
+          text: "Path",
+          value: "url",
+        },
+        {
+          text: "Acciones",
+          value: "actions",
+          sortable: false,
+        },
+      ],
+    };
+  },
+
+  async mounted() {
+    try {
+      const { body } = await this.$repositories.program.getAll({
+        "paginator.limit": 100000,
+      });
+
+      this.programs = body.docs;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.isFirstLoading = false;
+    }
   },
 
   methods: {
