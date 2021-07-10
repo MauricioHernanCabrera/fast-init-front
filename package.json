@@ -11,6 +11,9 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/pwa": "^3.3.5",
+    "async": "^3.2.0",
+    "big-number": "^2.0.0",
+    "bignumber.js": "^9.0.1",
     "cookie-universal-nuxt": "^2.1.4",
     "cookieparser": "^0.1.0",
     "copy-to-clipboard": "^3.3.1",
@@ -20,8 +23,10 @@
     "dotenv": "^8.2.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.33",
     "nuxt": "^2.14.12",
     "vue-i18n": "^8.23.0",
+    "vue-moment": "^4.1.0",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

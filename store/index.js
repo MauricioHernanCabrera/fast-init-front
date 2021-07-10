@@ -96,26 +96,26 @@ export const actions = {
     const resUser = await this.$repositories.user.getProfile();
 
     dispatch("setUser", resUser.body);
-  },
-
-  async nuxtServerInit({ dispatch }, { req }) {
-    try {
-      const { token } = cookieparser.parse(req.headers.cookie);
-
-      if (!token) {
-        return;
-      }
-
-      await dispatch("setToken", token);
-      await dispatch("loadUserData");
-
-      console.log("token: valid");
-    } catch (error) {
-      await Promise.all([
-        dispatch("removeToken"),
-        dispatch("removeRefreshToken")
-      ]);
-      console.log("token: death");
-    }
   }
+
+  // async nuxtServerInit({ dispatch }, { req }) {
+  //   try {
+  //     const { token } = cookieparser.parse(req.headers.cookie);
+
+  //     if (!token) {
+  //       return;
+  //     }
+
+  //     await dispatch("setToken", token);
+  //     await dispatch("loadUserData");
+
+  //     console.log("token: valid");
+  //   } catch (error) {
+  //     await Promise.all([
+  //       dispatch("removeToken"),
+  //       dispatch("removeRefreshToken")
+  //     ]);
+  //     console.log("token: death");
+  //   }
+  // }
 };

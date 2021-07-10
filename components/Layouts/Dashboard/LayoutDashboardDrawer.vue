@@ -8,7 +8,7 @@
     class="v-navigation-drawer--layout_dashboard_drawer"
     :mobile-breakpoint="992"
   >
-    <Logo class="mb_6" />
+    <Logo class="mt_6 mb_8" />
 
     <v-list dense>
       <v-list-item
@@ -28,7 +28,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-list class="v-list--layout_drashboard_avatar">
+    <!-- <v-list class="v-list--layout_drashboard_avatar">
       <v-list-item>
         <v-list-item-avatar class="mr_3">
           <v-img :src="user.picture"></v-img>
@@ -58,7 +58,7 @@
           </v-tooltip>
         </v-list-item-icon>
       </v-list-item>
-    </v-list>
+    </v-list> -->
   </v-navigation-drawer>
 </template>
 
@@ -75,13 +75,16 @@ export default {
     return {
       menuOpen: false,
       items: [
-        // { title: "Dashboard", icon: "view-dashboard", to: "/dashboard" },
-        { title: "Proyectos", icon: "clipboard", to: "/dashboard/" },
-        // { title: "Comandos", icon: "code-json", to: "/dashboard/commands" },
         {
-          title: "Programas",
-          icon: "format-list-bulleted-type",
-          to: "/dashboard/programs",
+          title: "Best breeding",
+          icon: "cash",
+          to: "/",
+          // to: "/best-breeding",
+        },
+        {
+          title: "Breading cost",
+          icon: "account-child",
+          to: "/breading-cost",
         },
       ],
     };

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="v-app--layout_dashboard">
+  <v-app class="v-app--layout_dashboard debugger">
     <slot />
   </v-app>
 </template>

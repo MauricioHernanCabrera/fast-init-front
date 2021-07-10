@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app flat class="v-app-bar--layout_dashboard_header">
+  <v-app-bar app flat class="v-app-bar--layout_dashboard_header" height="64px">
     <Logo />
 
     <v-spacer></v-spacer>

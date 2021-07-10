@@ -1,7 +1,7 @@
 <template>
   <nuxt-link to="/" class="logo">
-    <img class="logo__image" src="/images/logo.png" alt="" height="28px" />
-    <span class="logo__text">Fast Init</span>
+    <img class="logo__image" src="/images/logo-axie.png" alt="" height="28px" />
+    <div class="logo__text">Tools</div>
   </nuxt-link>
 </template>
 
@@ -16,10 +16,10 @@ export default {};
   display: flex;
   text-decoration: none;
   align-items: center;
+  flex-direction: column;
 }
 
 .logo__image {
-  margin-right: 6px;
 }
 
 .logo__text {

@@ -208,7 +208,7 @@
     font-size: 14px;
     line-height: 14px;
     font-weight: normal;
-    color: $color_dark2;
+    color: $color_dark;
     height: 64px;
 
     &:first-child {
@@ -222,8 +222,8 @@
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.566666px;
-    color: $color_dark3;
-    border-bottom: 1px solid $color_dark4 !important;
+    color: $color_dark;
+    border-bottom: 1px solid $color_dark !important;
     height: 64px;
 
     &:first-child {
@@ -232,6 +232,6 @@
   }
 
   & > .v-data-table__wrapper > table > thead > tr:last-child > th {
-    border-bottom: 1px solid $color_dark4;
+    border-bottom: 1px solid $color_dark;
   }
 }

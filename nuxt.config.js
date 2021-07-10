@@ -1,12 +1,12 @@
 import config from "./config";
 
 const page = {
-  title: "Fast Init",
-  short_name: "Fast Init",
-  description: "Inicia todos los programas que necesitas con un simple click",
+  title: "Axie Infinity backoffice",
+  short_name: "Axie Infinity backoffice",
+  description: "...",
   safeImg: {
     url: `${config.frontUrl}/images/safe_image.jpg`,
-    alt: "Image of Fast Init"
+    alt: "Image of Axie Infinity backoffice"
   },
   favicon: `${config.frontUrl}/images/logo.ico`,
   author: `Mauricio Hernan Cabrera`
@@ -92,6 +92,7 @@ export default {
     "@/plugins/vuelidate.js",
 
     { src: "@/plugins/ga.js", mode: "client" },
+    { src: "@/plugins/vue-moment.js", mode: "client" },
 
     "@/plugins/axios.js" // siempre ultimo
   ],
@@ -143,7 +144,7 @@ export default {
       dark: false,
       themes: {
         dark: {
-          primary: "#1867C0",
+          primary: "#4ED6DE",
           secondary: "#FB8C00",
           success: "#4CAF50",
           warning: "#FB8C00",

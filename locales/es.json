@@ -1,16 +1,5 @@
 {
   "validations": {
-    "name": {
-      "required": "¡El nombre es requerido!"
-    },
-    "url": {
-      "required": "¡La url es requerida!"
-    },
-    "project": {
-      "required": "¡El proyecto es requerido!"
-    },
-    "program": {
-      "required": "¡El programa es requerido!"
-    }
+    "required": "¡Este campo es requerido!"
   }
 }
