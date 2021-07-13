@@ -156,8 +156,6 @@ export default {
           `https://lunacia.skymavis.com/game-api/clients/${ethAddress}/items/1`
         );
 
-        console.log(resSlp);
-
         const lastClaimDateDay = new Date(resSlp.last_claimed_item_at * 1000);
 
         const lastClaimDateDayMoment = this.$moment(

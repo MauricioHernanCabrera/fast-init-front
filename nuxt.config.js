@@ -1,12 +1,12 @@
 import config from "./config";
 
 const page = {
-  title: "Axie Infinity backoffice",
-  short_name: "Axie Infinity backoffice",
+  title: "Axie Infinity tools",
+  short_name: "Axie Infinity tools",
   description: "...",
   safeImg: {
     url: `${config.frontUrl}/images/safe_image.jpg`,
-    alt: "Image of Axie Infinity backoffice"
+    alt: "Image of Axie Infinity tools"
   },
   favicon: `${config.frontUrl}/images/logo.ico`,
   author: `Mauricio Hernan Cabrera`

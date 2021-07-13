@@ -12,46 +12,53 @@
           <v-col cols="12" md="6" lg="3">
             <v-text-field
               v-model="form.fatherIds"
-              label="Padres ids"
+              label="Fathers ids"
+              placeholder="1578813,1578780,1559511"
             ></v-text-field>
           </v-col>
 
           <v-col cols="12" md="6" lg="3">
             <v-text-field
               v-model="form.motherIds"
-              label="Madres ids"
+              label="Mothers ids"
+              placeholder="1578813,1578780,1559511"
             ></v-text-field>
           </v-col>
         </v-row>
 
         <v-row class="mb_6">
-          <v-col cols="12" class="py_0 my_0"> Filtros </v-col>
+          <v-col cols="12" class="py_0 my_0"> Filters </v-col>
 
           <v-col cols="12" md="6" lg="3">
             <v-select
               :items="sortBy"
-              label="Ordenamiento"
+              label="Sort by"
               v-model="form.sortBy"
             ></v-select>
           </v-col>
 
           <v-col cols="12" md="6" lg="3">
             <v-text-field
+              v-model="form.statisticScore"
+              label="Statistic score"
+            ></v-text-field>
+
+            <v-text-field
               v-model="form.partScore"
-              label="Partes puntaje"
+              label="Card score"
             ></v-text-field>
           </v-col>
 
           <v-col cols="12" md="6" lg="3">
             <v-switch
               v-model="form.openParts"
-              label="Mostrar detalle de las partes"
+              label="Show detail of parts"
               hide-details
             ></v-switch>
           </v-col>
         </v-row>
 
-        <v-btn color="primary" type="submit">Buscar</v-btn>
+        <v-btn color="primary" type="submit">Search</v-btn>
       </form>
 
       <div class="breeding" v-if="breedingSelectedFounded.length !== 0">
@@ -71,7 +78,7 @@
       </span>
 
       <template v-else>
-        <div v-if="breedingFounded.length === 0">No se encontraron axies</div>
+        <div v-if="breedingFounded.length === 0">No axies found</div>
 
         <template v-else>
           <div class="breeding">
@@ -123,18 +130,25 @@ export default {
       isLoading: false,
 
       sortBy: [
-        { text: "Mayor puntaje", value: "best_point_score" },
-        { text: "Mayor puntaje de puros", value: "best_purity_score" },
-        { text: "Menor precio", value: "minor_price" },
+        { text: "Best score", value: "best_point_score" },
+        { text: "Best purity score", value: "best_purity_score" },
+        { text: "Minor price", value: "minor_price" },
       ],
 
       partsClassMap: {},
 
       form: {
+        // fatherIds: "1578813,1578780",
+        // motherIds: "1578813,1578780,1559511,1558496",
         fatherIds: null,
         motherIds: null,
+        // fatherIds:
+        //   "1578813,1578780,1559511,1558496,1562406,1556203,1531600,1526436,1571681,1536965,1508655,1508515,1541936,1541922,1578599,1574736,1578487,1578505,1429747,1429859,1560722,1507802,1428931,1463537,1353429,1529031,1507065,1539079,1526785,1569998,1538395,1542004,1539938,1538925,1561080,1518904,1518511,1578632,1340140,1563678,1563335,1416447,1538300,1548872,1443744,1516742,1548238,1469391",
+        // motherIds:
+        //   "1578813,1578780,1559511,1558496,1562406,1556203,1531600,1526436,1571681,1536965,1508655,1508515,1541936,1541922,1578599,1574736,1578487,1578505,1429747,1429859,1560722,1507802,1428931,1463537,1353429,1529031,1507065,1539079,1526785,1569998,1538395,1542004,1539938,1538925,1561080,1518904,1518511,1578632,1340140,1563678,1563335,1416447,1538300,1548872,1443744,1516742,1548238,1469391",
         openParts: false,
         partScore: null,
+        statisticScore: null,
         sortBy: null,
       },
 
@@ -259,7 +273,7 @@ export default {
     },
 
     breedingFiltered(breeding) {
-      const { partScore } = this.form;
+      const { partScore, statisticScore } = this.form;
 
       const clone = JSON.parse(JSON.stringify(breeding));
 
@@ -277,14 +291,16 @@ export default {
           tailProbs,
         } = breedingItem;
 
+        console.log({ statisticScore, partScore });
+
         return (
-          eyesProbs.slice().reverse()[1].value >= partScore &&
-          earsProbs.slice().reverse()[1].value >= partScore &&
+          eyesProbs.slice().reverse()[1].value >= statisticScore &&
+          earsProbs.slice().reverse()[1].value >= statisticScore &&
           //
-          mouthProbs.slice().reverse()[0].value >= partScore &&
-          hornProbs.slice().reverse()[0].value >= partScore &&
-          backProbs.slice().reverse()[0].value >= partScore &&
-          tailProbs.slice().reverse()[0].value >= partScore
+          mouthProbs.slice().reverse()[1].value >= partScore &&
+          hornProbs.slice().reverse()[1].value >= partScore &&
+          backProbs.slice().reverse()[1].value >= partScore &&
+          tailProbs.slice().reverse()[1].value >= partScore
         );
       });
     },
@@ -327,29 +343,33 @@ export default {
             backProbs[0].value +
             tailProbs[0].value;
 
+          const eyesProbsPurity = this.getPurity(eyesProbs);
+          const earsProbsPurity = this.getPurity(earsProbs);
+          const mouthProbsPurity = this.getPurity(mouthProbs);
+          const hornProbsPurity = this.getPurity(hornProbs);
+          const backProbsPurity = this.getPurity(backProbs);
+          const tailProbsPurity = this.getPurity(tailProbs);
+
           const purityScore =
-            this.getPurity(eyesProbs).value +
-            this.getPurity(earsProbs).value +
-            this.getPurity(mouthProbs).value +
-            this.getPurity(hornProbs).value +
-            this.getPurity(backProbs).value +
-            this.getPurity(tailProbs).value;
+            eyesProbsPurity.value +
+            earsProbsPurity.value +
+            mouthProbsPurity.value +
+            hornProbsPurity.value +
+            backProbsPurity.value +
+            tailProbsPurity.value;
 
           return {
             ...breeding,
-            eyesProbs: [...eyesProbs, this.getPurity(eyesProbs), eyesProbs[0]],
-            earsProbs: [...earsProbs, this.getPurity(earsProbs), earsProbs[0]],
-            mouthProbs: [
-              ...mouthProbs,
-              this.getPurity(mouthProbs),
-              mouthProbs[0],
-            ],
-            hornProbs: [...hornProbs, this.getPurity(hornProbs), hornProbs[0]],
-            backProbs: [...backProbs, this.getPurity(backProbs), backProbs[0]],
-            tailProbs: [...tailProbs, this.getPurity(tailProbs), tailProbs[0]],
+            eyesProbs: [...eyesProbs, eyesProbsPurity, eyesProbs[0]],
+            earsProbs: [...earsProbs, earsProbsPurity, earsProbs[0]],
+            mouthProbs: [...mouthProbs, mouthProbsPurity, mouthProbs[0]],
+            hornProbs: [...hornProbs, hornProbsPurity, hornProbs[0]],
+            backProbs: [...backProbs, backProbsPurity, backProbs[0]],
+            tailProbs: [...tailProbs, tailProbsPurity, tailProbs[0]],
             score,
+            scorePercentage: score / 6,
             purityScore,
-
+            purityScorePercentage: purityScore / 6,
             totalPriceUSD:
               parseFloat(get(breeding, "mother.auction.currentPriceUSD", 0)) +
               parseFloat(get(breeding, "father.auction.currentPriceUSD", 0)),
@@ -761,8 +781,8 @@ export default {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  @include breakpoint(xxl) {
+  /* @include breakpoint(xxl) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  } */
 }
 </style>

@@ -77,7 +77,11 @@
           <template #items> .</template>
         </DashboardPageHeader>
 
-        <div class="breeding_selected">
+        <span v-if="breedingSelected.length === 0">
+          No breeding selecteds
+        </span>
+
+        <div class="breeding_selected" v-else>
           <div
             class="breeding_selected_item"
             v-for="(
@@ -235,7 +239,7 @@
                 src="/images/currencies/axs.webp"
               ></v-img>
 
-              <v-icon>mdi-equal</v-icon>
+              <v-icon class="mx_2">mdi-equal</v-icon>
 
               <span class="breeding_selected_item__value">{{
                 parseFloat(breadingSelectedAxsItem.usdtPrice).toFixed(2)
@@ -312,71 +316,6 @@ export default {
       itemsSelected: [],
 
       breedingSelected: [],
-      breedingSelected: [
-        {
-          _id: 1625943047233,
-          fatherIndex: 0,
-          motherIndex: 0,
-          slpAmount: 300,
-          axsAmount: 4,
-          usdtPrice: 142.19,
-          type: "price",
-        },
-        {
-          _id: 1625943047935,
-          fatherIndex: 1,
-          motherIndex: 1,
-          slpAmount: 600,
-          axsAmount: 4,
-          usdtPrice: 214.1,
-          type: "price",
-        },
-        {
-          _id: 1625943048465,
-          fatherIndex: 2,
-          motherIndex: 2,
-          slpAmount: 900,
-          axsAmount: 4,
-          usdtPrice: 286.01,
-          type: "price",
-        },
-        {
-          _id: 1625943048977,
-          fatherIndex: 3,
-          motherIndex: 3,
-          slpAmount: 1500,
-          axsAmount: 4,
-          usdtPrice: 429.83000000000004,
-          type: "price",
-        },
-        {
-          _id: 1625943049438,
-          fatherIndex: 4,
-          motherIndex: 4,
-          slpAmount: 2400,
-          axsAmount: 4,
-          usdtPrice: 645.56,
-          type: "price",
-        },
-        {
-          _id: 1625943049945,
-          fatherIndex: 5,
-          motherIndex: 5,
-          slpAmount: 3900,
-          axsAmount: 4,
-          usdtPrice: 1005.11,
-          type: "price",
-        },
-        {
-          _id: 1625943050476,
-          fatherIndex: 6,
-          motherIndex: 6,
-          slpAmount: 6300,
-          axsAmount: 4,
-          usdtPrice: 1580.3899999999999,
-          type: "price",
-        },
-      ],
     };
   },
 
@@ -506,7 +445,6 @@ export default {
       }
       const [headerLeft, headerTop] = costItem._id.split("-");
       this.itemsSelected = [headerLeft, headerTop, costItem._id];
-      console.log(this.itemsSelected);
     },
 
     leaveCostItem(costItem) {
@@ -515,7 +453,6 @@ export default {
       }
 
       this.itemsSelected = [];
-      console.log(this.itemsSelected);
     },
 
     addBreading(costItem) {
@@ -602,6 +539,10 @@ export default {
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 24px;
 
+  /* @include breakpoint(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  } */
+
   @include breakpoint(lg) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -616,7 +557,7 @@ export default {
   min-width: 650px;
 
   @include breakpoint(lg) {
-    grid-column: span 3;
+    grid-column: span 2;
   }
 }
 

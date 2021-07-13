@@ -59,13 +59,22 @@ export default {
     },
 
     partHeaderStyles() {
-      if (this.purity.value == this.bestPart.value) {
+      if (this.purity.value >= 90) {
         return { border: "2px solid green" };
-      } else if (Math.abs(this.purity.value - this.bestPart.value) <= 15) {
-        return { border: "2px solid red" };
-      } else {
-        return {};
       }
+
+      if (this.purity.value >= 87) {
+        return { border: "2px solid red" };
+      }
+
+      return {};
+      // if (this.purity.value == this.bestPart.value) {
+      //   return { border: "2px solid green" };
+      // } else if (Math.abs(this.purity.value - this.bestPart.value) <= 15) {
+      //   return { border: "2px solid red" };
+      // } else {
+      //   return {};
+      // }
     },
   },
 };

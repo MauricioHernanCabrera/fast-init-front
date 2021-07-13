@@ -8,7 +8,12 @@
       <AxieItem :axie="breedingItem.mother" />
 
       <div class="breeding_item__general_info">
-        <PartItem :part="{ part: 'Puntaje', value: breedingItem.score }" />
+        <PartItem
+          :part="{
+            part: 'Puntaje de partes unicas',
+            value: breedingItem.score,
+          }"
+        />
 
         <PartItem
           :part="{
@@ -21,6 +26,20 @@
           :part="{
             part: 'Precio',
             value: `$${breedingItem.totalPriceUSD.toFixed(2)}`,
+          }"
+        />
+
+        <PartItem
+          :part="{
+            part: 'Porcentaje de partes unicas',
+            value: `${breedingItem.scorePercentage.toFixed(2)}%`,
+          }"
+        />
+
+        <PartItem
+          :part="{
+            part: 'Porcentaje de pureza',
+            value: `${breedingItem.purityScorePercentage.toFixed(2)}%`,
           }"
         />
       </div>
